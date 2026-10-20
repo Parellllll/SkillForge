@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="SkillForge.Views.ProjectsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="680" d:DesignWidth="940">
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Manajemen Portofolio Proyek" FontSize="22" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}"/>
+            <TextBlock Text="Kelola seluruh rekam jejak tugas besar kuliah dan karya mandiri Anda sebagai bukti kompetensi." FontSize="13" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,3,0,0"/>
+        </StackPanel>
+
+        <!-- Action & Search Bar -->
+        <Border Grid.Row="1" Background="{DynamicResource CardBgBrush}" CornerRadius="10" Padding="14,12" Margin="0,0,0,16" BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="320"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Search Input Realtime -->
+                <TextBox Grid.Column="0" Height="36" VerticalContentAlignment="Center" Padding="10,0" FontSize="12"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </TextBox.Resources>
+                </TextBox>
+
+                <!-- Tombol Ekspor & Tambah -->
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Content="📥 Ekspor Ringkasan (.md)" Command="{Binding ExportPortfolioCommand}"
+                            Background="Transparent" Foreground="{DynamicResource TextPrimaryBrush}" 
+                            BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1"
+                            Padding="14,0" Height="36" Margin="0,0,10,0" FontWeight="SemiBold" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Button Content="+ Tambah Proyek Baru" Command="{Binding OpenAddProjectCommand}"
+                            Background="#6366F1" Foreground="White" FontWeight="Bold"
+                            Padding="16,0" Height="36" BorderThickness="0" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="6"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- DataGrid Portofolio -->
+        <Border Grid.Row="2" Background="{DynamicResource CardBgBrush}" CornerRadius="10" Padding="18" BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1">
+            <DataGrid ItemsSource="{Binding FilteredProjects}" AutoGenerateColumns="False" 
+                      IsReadOnly="True" GridLinesVisibility="Horizontal" HeadersVisibility="Column"
+                      HorizontalGridLinesBrush="{DynamicResource BorderBrushColor}" Background="Transparent" BorderThickness="0">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Judul Karya Proyek" Binding="{Binding Title}" Width="2.2*" FontWeight="SemiBold"/>
+                    <DataGridTextColumn Header="Mata Kuliah / Asal" Binding="{Binding CourseName}" Width="1.5*"/>
+                    <DataGridTextColumn Header="Kompleksitas" Binding="{Binding DifficultyDisplay}" Width="110"/>
+                    <DataGridTextColumn Header="Tautan Repositori GitHub" Binding="{Binding RepoUrl}" Width="2*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+    </Grid>
+</UserControl>

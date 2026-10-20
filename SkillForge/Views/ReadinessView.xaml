@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="SkillForge.Views.ReadinessView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900">
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="Sistem Informasi Magang &amp; Cek Kesiapan" FontSize="24" FontWeight="Bold" Foreground="#0F172A"/>
+            <TextBlock Text="Pilih lowongan magang mitra industri dan uji kecocokan portofolio proyek Anda secara instan." FontSize="13" Foreground="#64748B" Margin="0,4,0,0"/>
+        </StackPanel>
+
+        <!-- Card Pemilihan Lowongan -->
+        <Border Grid.Row="1" Background="White" CornerRadius="10" Padding="18" Margin="0,0,0,20" BorderBrush="#E2E8F0" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="Pilih Lowongan Magang Aktif:" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,8"/>
+                    <ComboBox ItemsSource="{Binding AvailableRoles}" DisplayMemberPath="DisplayFull" SelectedItem="{Binding SelectedRole}" 
+                              Height="38" VerticalContentAlignment="Center" Padding="8,4" FontSize="13"/>
+                </StackPanel>
+
+                <Button Grid.Column="1" Content="🔍 Cek Kesiapan Saya" Command="{Binding CheckReadinessCommand}"
+                        Background="#6366F1" Foreground="White" FontWeight="Bold" Padding="18,0" Margin="15,22,0,0" Height="38" BorderThickness="0" Cursor="Hand">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="6"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Hasil Evaluasi Matriks -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="320"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Skor & Status Kesiapan -->
+            <Border Grid.Column="0" Background="#F8FAFC" CornerRadius="10" Padding="20" Margin="0,0,15,0" BorderBrush="#E2E8F0" BorderThickness="1">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="Kecocokan Kualifikasi" FontSize="14" FontWeight="SemiBold" Foreground="#64748B" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding CalculatedScore, StringFormat={}{0:F1}%}" FontSize="48" FontWeight="Bold" Foreground="#6366F1" HorizontalAlignment="Center" Margin="0,10"/>
+                    <Border Background="#FEF3C7" CornerRadius="20" Padding="12,5" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding StatusText}" FontSize="13" FontWeight="Bold" Foreground="{Binding StatusColor}"/>
+                    </Border>
+                    <TextBlock Text="Berdasarkan bukti proyek di repositori Anda" FontSize="11" Foreground="#94A3B8" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Matriks Syarat Skill vs Bukti Proyek -->
+            <Border Grid.Column="1" Background="White" CornerRadius="10" Padding="20" BorderBrush="#E2E8F0" BorderThickness="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Rincian Syarat Teknologi Lowongan" FontSize="15" FontWeight="Bold" Foreground="#1E293B" Margin="0,0,0,12"/>
+
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding RoleSkills}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#F8FAFC" BorderBrush="#E2E8F0" BorderThickness="1" CornerRadius="6" Padding="14,10" Margin="0,0,0,8">
+                                    <DockPanel>
+                                        <StackPanel DockPanel.Dock="Left">
+                                            <TextBlock Text="{Binding SkillName}" FontWeight="Bold" Foreground="#1E293B" FontSize="13"/>
+                                            <TextBlock Text="{Binding RequirementType}" Foreground="#64748B" FontSize="11"/>
+                                        </StackPanel>
+                                        <Border DockPanel.Dock="Right" Background="{Binding BadgeBackground}" CornerRadius="12" Padding="10,4">
+                                            <TextBlock Text="{Binding StatusLabel}" FontWeight="Bold" Foreground="{Binding StatusBrush}" FontSize="11"/>
+                                        </Border>
+                                    </DockPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

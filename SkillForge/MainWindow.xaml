@@ -1,0 +1,116 @@
+﻿<Window x:Class="SkillForge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:SkillForge.ViewModels"
+        xmlns:views="clr-namespace:SkillForge.Views"
+        mc:Ignorable="d"
+        Title="SkillForge Enterprise - Sistem Informasi Magang &amp; Asesmen Kesiapan Portofolio" 
+        Height="760" Width="1240" WindowStartupLocation="CenterScreen" 
+        Background="{DynamicResource AppBgBrush}">
+
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type vm:DashboardViewModel}">
+            <views:DashboardView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ProjectsViewModel}">
+            <views:ProjectsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:ReadinessViewModel}">
+            <views:ReadinessView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type vm:PipelineViewModel}">
+            <views:PipelineView/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Sidebar Navigation -->
+        <Border Grid.Column="0" Background="#0F172A">
+            <DockPanel Margin="18,22">
+                <!-- Header Brand Logo -->
+                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,30">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border Background="#6366F1" Width="36" Height="36" CornerRadius="8" Margin="0,0,10,0">
+                            <TextBlock Text="⚡" FontSize="18" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel>
+                            <TextBlock Text="SkillForge Pro" FontSize="18" FontWeight="ExtraBold" Foreground="White"/>
+                            <TextBlock Text="Internship &amp; Portfolio" FontSize="10" Foreground="#94A3B8"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+
+                <!-- Footer User Profile & Theme Switcher -->
+                <StackPanel DockPanel.Dock="Bottom">
+                    <!-- Tombol Ganti Tema (Dark / Light Mode) -->
+                    <Button Content="{Binding ThemeButtonText}" Command="{Binding ToggleThemeCommand}"
+                            Background="#1E293B" Foreground="#E2E8F0" Height="38" FontWeight="SemiBold"
+                            BorderBrush="#334155" BorderThickness="1" Margin="0,0,0,12" FontSize="12" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                    <Border Background="#1E293B" CornerRadius="10" Padding="14">
+                        <DockPanel>
+                            <Border Width="38" Height="38" CornerRadius="19" Background="#4F46E5" Margin="0,0,10,0" DockPanel.Dock="Left">
+                                <TextBlock Text="FP" Foreground="White" FontWeight="Bold" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel VerticalAlignment="Center">
+                                <TextBlock Text="Farrel Prastita R." Foreground="White" FontWeight="Bold" FontSize="12"/>
+                                <TextBlock Text="NRP: 5025241219" Foreground="#94A3B8" FontSize="10"/>
+                                <TextBlock Text="● Mahasiswa Aktif" Foreground="#10B981" FontSize="9" FontWeight="SemiBold" Margin="0,2,0,0"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Menu Buttons -->
+                <StackPanel DockPanel.Dock="Top">
+                    <TextBlock Text="MENU UTAMA" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="10,0,0,10"/>
+
+                    <Button Content="📊 Dashboard Analitik" Command="{Binding NavigateCommand}" CommandParameter="Dashboard"
+                            Background="Transparent" Foreground="#E2E8F0" Height="42" HorizontalContentAlignment="Left"
+                            Padding="14,0" BorderThickness="0" Margin="0,0,0,4" FontSize="13" Cursor="Hand"/>
+
+                    <Button Content="💼 Lowongan Magang" Command="{Binding NavigateCommand}" CommandParameter="Readiness"
+                            Background="Transparent" Foreground="#E2E8F0" Height="42" HorizontalContentAlignment="Left"
+                            Padding="14,0" BorderThickness="0" Margin="0,0,0,4" FontSize="13" Cursor="Hand"/>
+
+                    <Button Content="📁 Portofolio Proyek" Command="{Binding NavigateCommand}" CommandParameter="Projects"
+                            Background="Transparent" Foreground="#E2E8F0" Height="42" HorizontalContentAlignment="Left"
+                            Padding="14,0" BorderThickness="0" Margin="0,0,0,4" FontSize="13" Cursor="Hand"/>
+
+                    <Button Content="📌 Pelacak Lamaran (Pipeline)" Command="{Binding NavigateCommand}" CommandParameter="Pipeline"
+                            Background="Transparent" Foreground="#E2E8F0" Height="42" HorizontalContentAlignment="Left"
+                            Padding="14,0" BorderThickness="0" Margin="0,0,0,4" FontSize="13" Cursor="Hand"/>
+
+                    <TextBlock Text="SISTEM &amp; DATABASE" FontSize="10" FontWeight="Bold" Foreground="#64748B" Margin="10,20,0,10"/>
+
+                    <Border Background="#1E293B" CornerRadius="6" Padding="10,8">
+                        <StackPanel>
+                            <TextBlock Text="Status SQL Server:" FontSize="10" Foreground="#94A3B8"/>
+                            <TextBlock Text="🟢 Terhubung (SkillForge_DB)" FontSize="10" FontWeight="Bold" Foreground="#10B981" Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Main Content Area -->
+        <ContentControl Grid.Column="1" Content="{Binding CurrentView}"/>
+    </Grid>
+</Window>
