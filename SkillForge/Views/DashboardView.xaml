@@ -15,9 +15,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- ============================================================== -->
-            <!-- HERO CARD (SHADCN ZINC ELEVATED)                               -->
-            <!-- ============================================================== -->
             <Border Grid.Row="0" Background="{DynamicResource CardBgBrush}" 
                     BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1" 
                     CornerRadius="8" Padding="24" Margin="0,0,0,24">
@@ -54,9 +51,6 @@
                 </Grid>
             </Border>
 
-            <!-- ============================================================== -->
-            <!-- 4 KPI METRICS CARDS                                            -->
-            <!-- ============================================================== -->
             <UniformGrid Grid.Row="1" Columns="4" Margin="0,0,0,24">
                 <!-- KPI 1 -->
                 <Border Background="{DynamicResource CardBgBrush}" CornerRadius="8" Padding="18" Margin="0,0,8,0" 
@@ -116,9 +110,6 @@
                 </Border>
             </UniformGrid>
 
-            <!-- ============================================================== -->
-            <!-- REKOMENDASI LOWONGAN MAGANG UNGGULAN                           -->
-            <!-- ============================================================== -->
             <Border Grid.Row="2" Background="{DynamicResource CardBgBrush}" CornerRadius="8" 
                     Padding="20" Margin="0,0,0,24" BorderBrush="{DynamicResource BorderBrushColor}" BorderThickness="1">
                 <StackPanel>
