@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace SkillForge.ViewModels
@@ -9,7 +9,13 @@ namespace SkillForge.ViewModels
         private object? _currentView;
 
         [ObservableProperty]
-        private string _themeButtonText = "🌙 Mode Gelap";
+        private string _currentViewName = "Dashboard";
+
+        [ObservableProperty]
+        private string _themeButtonText = "Mode Gelap";
+
+        [ObservableProperty]
+        private bool _isDarkMode = false;
 
         public DashboardViewModel DashboardVM { get; } = new();
         public ProjectsViewModel ProjectsVM { get; } = new();
@@ -19,11 +25,13 @@ namespace SkillForge.ViewModels
         public MainViewModel()
         {
             CurrentView = DashboardVM;
+            CurrentViewName = "Dashboard";
         }
 
         [RelayCommand]
         private void Navigate(string viewName)
         {
+            CurrentViewName = viewName;
             CurrentView = viewName switch
             {
                 "Dashboard" => DashboardVM,
@@ -38,7 +46,8 @@ namespace SkillForge.ViewModels
         private void ToggleTheme()
         {
             App.ToggleTheme();
-            ThemeButtonText = App.IsDarkMode ? "☀️ Mode Terang" : "🌙 Mode Gelap";
+            IsDarkMode = App.IsDarkMode;
+            ThemeButtonText = App.IsDarkMode ? "Mode Terang" : "Mode Gelap";
         }
     }
 }
